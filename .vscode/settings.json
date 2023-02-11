@@ -1,0 +1,8 @@
+{
+    "csharp.inlayHints.parameters.enabled": true,
+    "csharp.inlayHints.parameters.forIndexerParameters": true,
+    "csharp.inlayHints.parameters.forLiteralParameters": true,
+    "csharp.inlayHints.parameters.forObjectCreationParameters": true,
+    "csharp.inlayHints.types.forImplicitObjectCreation": true,
+    "omnisharp.enableImportCompletion": true
+}
