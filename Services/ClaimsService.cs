@@ -15,10 +15,12 @@ public class ClaimsService : IClaimsService
                 new Claim(ClaimTypes.Email, user.emailAddress)
             };
 
-
-        foreach (var userRole in user.roles)
+        if (user.roles.Count() != 0)
         {
-            userClaims.Add(new Claim(ClaimTypes.Role, userRole.libelle));
+            foreach (var userRole in user.roles)
+            {
+                userClaims.Add(new Claim(ClaimTypes.Role, userRole.libelle));
+            }
         }
 
         return userClaims;

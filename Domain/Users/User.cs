@@ -7,6 +7,10 @@ using Abyster_Test_Project.SharedKernel;
 namespace Abyster_Test_Project.Domain.Users;
 
 public class User : Common{
+    public User()
+    {
+        roles = new List<Role>();
+    }
 
     [Required]
     public string firstName { get; set; }

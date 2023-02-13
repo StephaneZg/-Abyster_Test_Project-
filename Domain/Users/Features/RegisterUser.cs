@@ -1,9 +1,11 @@
 
+using System.IO.Compression;
 using Abyster_Test_Project.Contract;
+using Abyster_Test_Project.Domain.Accounts;
+using Abyster_Test_Project.Domain.Roles;
 using Abyster_Test_Project.Domain.Users.Dtos;
 using AutoMapper;
 using MediatR;
-using BCrypt.Net;
 
 namespace Abyster_Test_Project.Domain.Users.Features;
 
@@ -40,10 +42,28 @@ public class RegisterUser{
             }
 
             User userToSave = _mapper.Map<User>(registrationRequest);
-            userToSave.password = BCrypt.HashPasword()
+            userToSave.password = BCrypt.Net.BCrypt.HashPassword(userToSave.password);
+            userToSave.roles.Append(getUserRole());
             _serviceManager.User.Create((User) userToSave);
             await _serviceManager.Save();
+
+            Account userAccount = new Account();
+            userAccount.balance = 0;
+            userAccount.user = userToSave;
+            _serviceManager.Account.Create(userAccount);
+            await _serviceManager.Save();
+
             return true;
+        }
+
+        private Role getUserRole()
+        {
+            var matchRole = _serviceManager.Role.FindByCondition(role => role.libelle == "User", false).SingleOrDefault();
+            if (matchRole == null)
+            {
+                throw new Exception("Category does not exists.");
+            }
+            return matchRole;
         }
     }
 }

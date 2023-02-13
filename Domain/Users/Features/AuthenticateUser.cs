@@ -5,6 +5,7 @@ using Abyster_Test_Project.Contract;
 using Abyster_Test_Project.Domain.Users.Dtos;
 using Abyster_Test_Project.Services;
 using AutoMapper;
+using BCrypt.Net;
 using MediatR;
 using Microsoft.IdentityModel.Tokens;
 
@@ -51,6 +52,11 @@ public class AuthenticateUser {
             }
             if(user.isActive == false){
                 throw new Exception("Account have been deactivated. Please contact the administrator");
+            }
+            bool emailMatch = user.emailAddress.Equals(authRequest.emailAddress);
+            bool passwordMatch = BCrypt.Net.BCrypt.Verify(authRequest.password, user.password);
+            if(!emailMatch || !passwordMatch){
+                throw new Exception("Email or Password is incorrect");
             }
 
             User matchUser = (User) user;

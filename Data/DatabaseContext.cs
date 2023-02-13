@@ -27,11 +27,13 @@ public class DatabaseContext : DbContext
         _mediator = mediator;
         _currentUserService = currentUserService;
         _configuration = configuration;
+
     }
 
     protected override void  OnConfiguring(DbContextOptionsBuilder options){
 
         options.UseSqlite(_configuration.GetConnectionString("AuthSqliteDB"));
+        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder){
@@ -72,6 +74,7 @@ public class DatabaseContext : DbContext
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<User> Users {get; set;}
+    public DbSet<Role> Roles {get; set;}
     public DbSet<AccountJournal> AccountJournals {get; set;}
 
     public override int SaveChanges()
@@ -113,6 +116,7 @@ public class DatabaseContext : DbContext
             switch (entry.State)
             {
                 case EntityState.Added:
+                    Console.WriteLine("CURRENT USER ID "+_currentUserService?.UserId);
                     entry.Entity.UpdateCreationProperties(now, _currentUserService?.UserId);
                     entry.Entity.UpdateModifiedProperties(now, _currentUserService?.UserId);
                     break;

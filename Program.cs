@@ -9,6 +9,7 @@ using Abyster_Test_Project.Services;
 using Abyster_Test_Project.Domain.Users.Mappings;
 using Abyster_Test_Project.Service.Contract;
 using MediatR;
+using Abyster_Test_Project.Domain.Accounts.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,7 @@ builder.Services.AddDbContext<DatabaseContext>();
 var maperConfig = new MapperConfiguration(cfg =>
 {
     cfg.AddProfile(new UserMapping());
+    cfg.AddProfile(new AccountMapping());
 });
 var mapper = maperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
@@ -41,6 +43,7 @@ var jwtSettings = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtS
 builder.Services.ConfigureJWT(jwtSettings);
 
 builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddTransient<DatabaseSeeder>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IClaimsService, ClaimsService>();
 builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();
@@ -92,8 +95,20 @@ builder.Services.AddSwaggerGen(options =>
         });
 });
 
-
 var app = builder.Build();
+
+if(args.Length == 1 && args[0] == "seeddata"){
+    seedData(app);
+}
+
+void seedData(IHost app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+    using(var scope = scopedFactory.CreateScope()){
+        var service = scope.ServiceProvider.GetService<DatabaseSeeder>();
+        service.Seed();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

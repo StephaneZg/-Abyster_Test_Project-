@@ -36,6 +36,7 @@ public class DeactivateUser{
                 User matchUser = (User) user;
                 matchUser.isActive = false;
                 _serviceManager.User.Update(matchUser);
+                await _serviceManager.Save();
                 return true;
             }
             return false;

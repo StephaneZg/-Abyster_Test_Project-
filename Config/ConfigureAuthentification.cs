@@ -52,6 +52,7 @@ public static class ConfigureAuthentification
 
                     // _logger.LogInfo("User successfully authenticated");
                     Console.WriteLine("User successfully authenticated");
+                    
                     return Task.CompletedTask;
                 },
 

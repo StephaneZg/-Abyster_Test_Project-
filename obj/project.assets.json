@@ -2208,19 +2208,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zang stephane\\.nuget\\packages\\": {}
+    "C:\\Users\\HP USER\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zang stephane\\Documents\\Abyster_Test_Project-\\Abyster_Test_Project.csproj",
+      "projectUniqueName": "C:\\Users\\HP USER\\Documents\\StephaneZang_Folders\\MyFiles\\Asp_Net_Project\\Abyster_Test_Project-\\Abyster_Test_Project.csproj",
       "projectName": "Abyster_Test_Project",
-      "projectPath": "C:\\Users\\zang stephane\\Documents\\Abyster_Test_Project-\\Abyster_Test_Project.csproj",
-      "packagesPath": "C:\\Users\\zang stephane\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zang stephane\\Documents\\Abyster_Test_Project-\\obj\\",
+      "projectPath": "C:\\Users\\HP USER\\Documents\\StephaneZang_Folders\\MyFiles\\Asp_Net_Project\\Abyster_Test_Project-\\Abyster_Test_Project.csproj",
+      "packagesPath": "C:\\Users\\HP USER\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\HP USER\\Documents\\StephaneZang_Folders\\MyFiles\\Asp_Net_Project\\Abyster_Test_Project-\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\zang stephane\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\HP USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
