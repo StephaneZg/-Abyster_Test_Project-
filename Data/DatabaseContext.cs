@@ -17,10 +17,21 @@ public class DatabaseContext : DbContext
     private readonly ICurrentUserService _currentUserService;
     private readonly IMediator _mediator;
 
-    public DatabaseContext(DbContextOptions options, ICurrentUserService currentUserService, IMediator mediator) : base(options)
+    private readonly IConfiguration _configuration;
+
+    public DatabaseContext(DbContextOptions options,
+     ICurrentUserService currentUserService,
+     IMediator mediator,
+     IConfiguration configuration) : base(options)
     {
         _mediator = mediator;
         _currentUserService = currentUserService;
+        _configuration = configuration;
+    }
+
+    protected override void  OnConfiguring(DbContextOptionsBuilder options){
+
+        options.UseSqlite(_configuration.GetConnectionString("AuthSqliteDB"));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder){

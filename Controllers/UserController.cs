@@ -22,7 +22,7 @@ public class UserController : ControllerBase {
 
     [HttpPost("authenticate")]
     [AllowAnonymous]
-    public async Task<ActionResult> AuthenticateUser(AuthenticationRequest authRequest){
+    public async Task<ActionResult<AuthenticationResponse>> AuthenticateUser(AuthenticationRequest authRequest){
 
         var command = new AuthenticateUserCommand(authRequest);
         try{

@@ -26,4 +26,8 @@ public class ServiceManager : IServiceManager{
             return _userRepository;
         }
     }
+
+    public async Task Save(){
+        await _context.SaveChangesAsync();
+    }
 }

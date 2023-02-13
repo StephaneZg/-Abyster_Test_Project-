@@ -28,9 +28,12 @@ public class AuthenticateUser {
         private readonly IMapper _mapper;
         private readonly IJwtTokenService _jwtTokenService;
 
-        private readonly ClaimsService _claimService;
+        private readonly IClaimsService _claimService;
 
-        public Handler(IServiceManager serviceManager, IMapper mapper, IJwtTokenService jwtTokenService, ClaimsService claimsService)
+        public Handler(IServiceManager serviceManager,
+         IMapper mapper,
+         IJwtTokenService jwtTokenService,
+         IClaimsService claimsService)
         {
             _mapper = mapper;
             _serviceManager = serviceManager;
@@ -46,6 +49,9 @@ public class AuthenticateUser {
             if(user == null){
                 throw new Exception("User does not exists");
             }
+            if(user.isActive == false){
+                throw new Exception("Account have been deactivated. Please contact the administrator");
+            }
 
             User matchUser = (User) user;
             List<Claim> userClaims = _claimService.GetUserClaimsAsync(matchUser);
@@ -56,6 +62,7 @@ public class AuthenticateUser {
             matchUser.refreshToken = refreshToken;
             matchUser.refreshTokenExpireTime = DateTime.Now.AddDays(1);
             _serviceManager.User.Update(matchUser);
+            await _serviceManager.Save();
 
             AuthenticationResponse userResponse = _mapper.Map<AuthenticationResponse>(matchUser);
 

@@ -1,5 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Abyster_Test_Project.Domain.Roles;
 using Abyster_Test_Project.SharedKernel;
 
@@ -18,6 +19,7 @@ public class User : Common{
     [Required]
     public string password { get; set; }
 
+    [Column(TypeName = "Boolean")]
     public bool isActive {get; set;}
 
     public string? token {get; set;}

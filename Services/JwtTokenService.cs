@@ -12,9 +12,16 @@ namespace Abyster_Test_Project.Services;
 public class JwtTokenService : IJwtTokenService
 {
     private JwtSettings _jwtSettings;
-    public JwtTokenService(JwtSettings jwtSettings)
+    private IConfiguration _configuration;
+    public JwtTokenService(IConfiguration configuration)
     {
-        _jwtSettings = jwtSettings;
+        _configuration = configuration;
+        _jwtSettings = retrieveJwtSettings(configuration);
+    }
+
+    private JwtSettings retrieveJwtSettings(IConfiguration configuration){
+
+       return configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>();
     }
 
     public JwtSecurityToken generateToken(List<Claim> userClaims)

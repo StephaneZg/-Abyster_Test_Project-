@@ -3,6 +3,7 @@ using Abyster_Test_Project.Contract;
 using Abyster_Test_Project.Domain.Users.Dtos;
 using AutoMapper;
 using MediatR;
+using BCrypt.Net;
 
 namespace Abyster_Test_Project.Domain.Users.Features;
 
@@ -39,7 +40,9 @@ public class RegisterUser{
             }
 
             User userToSave = _mapper.Map<User>(registrationRequest);
+            userToSave.password = BCrypt.HashPasword()
             _serviceManager.User.Create((User) userToSave);
+            await _serviceManager.Save();
             return true;
         }
     }

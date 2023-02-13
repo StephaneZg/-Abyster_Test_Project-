@@ -4,5 +4,6 @@
     "csharp.inlayHints.parameters.forLiteralParameters": true,
     "csharp.inlayHints.parameters.forObjectCreationParameters": true,
     "csharp.inlayHints.types.forImplicitObjectCreation": true,
-    "omnisharp.enableImportCompletion": true
+    "omnisharp.enableImportCompletion": true,
+    "terminal.explorerKind": "external"
 }

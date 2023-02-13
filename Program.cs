@@ -8,19 +8,27 @@ using Abyster_Test_Project.Contract;
 using Abyster_Test_Project.Services;
 using Abyster_Test_Project.Domain.Users.Mappings;
 using Abyster_Test_Project.Service.Contract;
-using System.Reflection;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var databaseSettings = builder.Configuration.GetSection(nameof(DatabaseSettings)).Get<DatabaseSettings>();
-builder.Services.AddDbContext<DatabaseContext>(options =>
-                options.UseNpgsql(databaseSettings.ToString())
-                .LogTo(Console.WriteLine)
-                .EnableSensitiveDataLogging()
-                .EnableDetailedErrors()
-    );
+// var databaseSettings = builder.Configuration.GetSection(nameof(DatabaseSettings)).Get<DatabaseSettings>();
+// builder.Services.AddDbContext<DatabaseContext>(options =>
+//                 options.UseNpgsql(databaseSettings.ToString())
+//                 .LogTo(Console.WriteLine)
+//                 .EnableSensitiveDataLogging()
+//                 .EnableDetailedErrors()
+//     );
+
+// var sqliteDqtqbseSettings = builder.Configuration.GetConnectionString("AuthSqliteDB");
+// builder.Services.AddDbContext<DatabaseContext>(options => 
+//                     options.UseSqlite(sqliteDqtqbseSettings)
+//                     .LogTo(Console.WriteLine)
+//                     .EnableSensitiveDataLogging()
+//                     .EnableDetailedErrors());
+builder.Services.AddDbContext<DatabaseContext>();
 
 var maperConfig = new MapperConfiguration(cfg =>
 {
@@ -32,7 +40,7 @@ builder.Services.AddSingleton(mapper);
 var jwtSettings = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>();
 builder.Services.ConfigureJWT(jwtSettings);
 
-builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(typeof(Program));
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IClaimsService, ClaimsService>();
 builder.Services.AddTransient<IJwtTokenService, JwtTokenService>();

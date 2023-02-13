@@ -19,6 +19,7 @@ public static class ConfigureAuthentification
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         });
 
+        Console.WriteLine("JWTSETTINGS :"+jwtSettings.ToString());
         AuthentificationBuilder.AddJwtBearer(options =>
         {
             options.SaveToken = true;
