@@ -10,6 +10,7 @@ using Abyster_Test_Project.Domain.Users.Mappings;
 using Abyster_Test_Project.Service.Contract;
 using MediatR;
 using Abyster_Test_Project.Domain.Accounts.Mappings;
+using Abyster_Test_Project.Domain.Categorys.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,8 @@ var maperConfig = new MapperConfiguration(cfg =>
 {
     cfg.AddProfile(new UserMapping());
     cfg.AddProfile(new AccountMapping());
+    cfg.AddProfile(new CategoryMappings());
+    cfg.AddProfile(new AccountJournalMappings());
 });
 var mapper = maperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);

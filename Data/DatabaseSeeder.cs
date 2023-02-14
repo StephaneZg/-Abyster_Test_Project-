@@ -40,8 +40,8 @@ public class DatabaseSeeder {
             _context.Roles.AddRange(roles);
         }
         
-        var admin = _context.Users.FirstAsync(user => user.emailAddress == "admin@admin.com");
-        if(admin == null){
+        // var admin = _context.Users.FirstAsync(user => user.emailAddress == "admin@admin.com");
+        if(!_context.Users.Any()){
             var adminUser = new User(){
                 firstName = "Administrator",
                 lastName = "Administrator",
