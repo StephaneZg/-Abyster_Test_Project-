@@ -11,7 +11,7 @@ public class AccountJournalDto : Common{
 
     public int category_id { get; set; }
 
-    public string user_id { get; set; }
+    public int user_id { get; set; }
 
     public string firstName { get; set; }
 

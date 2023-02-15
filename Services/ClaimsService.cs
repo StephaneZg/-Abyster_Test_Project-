@@ -12,7 +12,8 @@ public class ClaimsService : IClaimsService
         List<Claim> userClaims = new()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.emailAddress)
+                new Claim(ClaimTypes.Email, user.emailAddress),
+                new Claim(ClaimTypes.Name, user.lastName + user.firstName),
             };
 
         if (user.roles.Count() != 0)
