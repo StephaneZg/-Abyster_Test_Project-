@@ -47,7 +47,7 @@ public class RegisterAdminUser{
             int requestInitUserId = int.Parse(_currentUserService.UserId);
             var matchRequestInitUserIdInDb =  _serviceManager.User.FindByCondition(user => 
                                 user.Id == requestInitUserId, false).SingleOrDefault();
-            if(matchRequestInitUserIdInDb != null){
+            if(matchRequestInitUserIdInDb == null){
                 throw new Exception("Request init user have been deleted");
             }
             if(matchRequestInitUserIdInDb.initialized == false){
@@ -62,7 +62,7 @@ public class RegisterAdminUser{
             
             User userToSave = _mapper.Map<User>(registrationRequest);
             userToSave.password = BCrypt.Net.BCrypt.HashPassword(userToSave.password);
-            userToSave.roles = new List<Role>(){getUserRole(), getAdminRole()};
+            userToSave.roles = new List<Role>(){getAdminRole()};
             _serviceManager.User.Create((User) userToSave);
             await _serviceManager.Save();
 
@@ -87,7 +87,7 @@ public class RegisterAdminUser{
 
         private Role getAdminRole()
         {
-            var matchRole = _serviceManager.Role.FindByCondition(role => role.libelle == "User", true).SingleOrDefault();
+            var matchRole = _serviceManager.Role.FindByCondition(role => role.libelle == "Admin", true).SingleOrDefault();
             if (matchRole == null)
             {
                 throw new Exception(message: "Category does not exists.");

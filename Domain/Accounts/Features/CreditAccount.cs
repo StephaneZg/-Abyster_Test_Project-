@@ -44,14 +44,14 @@ public class CreditAccount
             {
                 throw new Exception("User informations is missing.");
             }
-            var matchUser = _serviceManager.User.FindByCondition(user => user.Id == userId, false)
+            var matchUser = _serviceManager.User.FindByCondition(user => user.Id == userId, true)
                                             .SingleOrDefault();
 
             if (matchUser == null)
             {
                 throw new Exception("User does not exists.");
             }
-            var matchUserAccount = _serviceManager.Account.FindByCondition(account => account.user == matchUser, false)
+            var matchUserAccount = _serviceManager.Account.FindByCondition(account => account.user == matchUser, true)
                                             .SingleOrDefault();
             if (matchUserAccount == null)
             {
@@ -60,6 +60,7 @@ public class CreditAccount
 
             journal.amount = creditAccountRequest.amount;
             journal.account = matchUserAccount;
+            journal.user = matchUser;
             journal.category = getCreditCategory(creditAccountRequest.category);
             _serviceManager.AccountJournal.Create(journal);
             _serviceManager.Save();
