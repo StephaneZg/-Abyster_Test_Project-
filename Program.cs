@@ -11,6 +11,10 @@ using Abyster_Test_Project.Service.Contract;
 using MediatR;
 using Abyster_Test_Project.Domain.Accounts.Mappings;
 using Abyster_Test_Project.Domain.Categorys.Mappings;
+using MediatR.Pipeline;
+using static Abyster_Test_Project.Domain.Users.Features.AuthenticateUser;
+using Abyster_Test_Project.Domain.Users.Dtos;
+using Abyster_Test_Project.SharedKernel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,11 +77,6 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1"
     });
 
-    //Generate the xml documentation that will dive the swagger documentation
-    // var xmlFile = string.Format("{0}.xml", Assembly.GetExecutingAssembly().GetName().Name);
-    // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    // options.IncludeXmlComments(xmlPath);
-
     options.AddSecurityDefinition("Bearer",
         new OpenApiSecurityScheme
         {
@@ -98,6 +97,7 @@ builder.Services.AddSwaggerGen(options =>
         });
 });
 
+
 var app = builder.Build();
 
 if(args.Length == 1 && args[0] == "seeddata"){
@@ -111,7 +111,9 @@ void seedData(IHost app)
         var service = scope.ServiceProvider.GetService<DatabaseSeeder>();
         service.Seed();
     }
-}
+}  
+//Exception Handling middleware
+app.ConfigureExceptionHandler();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

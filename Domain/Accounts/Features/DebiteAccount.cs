@@ -59,7 +59,7 @@ public class DebiteAccount {
             }
             
             journal.account = matchUserAccount;
-            journal.amount = debiteAccountRequest.amount;
+            journal.amount = -debiteAccountRequest.amount;
             journal.category = getDebiteCategory(debiteAccountRequest.category);
             _serviceManager.AccountJournal.Create(journal);
             _serviceManager.Save();
@@ -69,7 +69,7 @@ public class DebiteAccount {
 
         private Category getDebiteCategory(int category_id)
         {
-            var mathcCategory = _serviceManager.Category.FindByCondition(category => category.Id == category_id, false).SingleOrDefault();
+            var mathcCategory = _serviceManager.Category.FindByCondition(category => category.Id == category_id, true).SingleOrDefault();
             if(mathcCategory == null){
                 throw new Exception("Category does not exists.");
             }

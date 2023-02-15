@@ -3,6 +3,7 @@ using System;
 using Abyster_Test_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AbysterTestProject.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230215164636_SnapshotWithUserRoleRelationUpdate3")]
+    partial class SnapshotWithUserRoleRelationUpdate3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
@@ -168,11 +171,6 @@ namespace AbysterTestProject.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("initialized")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("Boolean")
-                        .HasDefaultValue(false);
-
                     b.Property<bool>("isActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("Boolean")
@@ -192,6 +190,9 @@ namespace AbysterTestProject.Data.Migrations
                     b.Property<DateTime?>("refreshTokenExpireTime")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("rolesId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("token")
                         .HasColumnType("TEXT");
 
@@ -203,22 +204,9 @@ namespace AbysterTestProject.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("rolesId");
+
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<int>("rolesId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("usersId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("rolesId", "usersId");
-
-                    b.HasIndex("usersId");
-
-                    b.ToTable("RoleUser");
                 });
 
             modelBuilder.Entity("Abyster_Test_Project.Domain.Account_Journals.AccountJournal", b =>
@@ -259,19 +247,15 @@ namespace AbysterTestProject.Data.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("Abyster_Test_Project.Domain.Users.User", b =>
                 {
-                    b.HasOne("Abyster_Test_Project.Domain.Roles.Role", null)
+                    b.HasOne("Abyster_Test_Project.Domain.Roles.Role", "roles")
                         .WithMany()
                         .HasForeignKey("rolesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Abyster_Test_Project.Domain.Users.User", null)
-                        .WithMany()
-                        .HasForeignKey("usersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("roles");
                 });
 #pragma warning restore 612, 618
         }

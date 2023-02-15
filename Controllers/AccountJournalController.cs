@@ -20,43 +20,42 @@ namespace Abyster_Test_Project.Controllers;
 [Route("api/v1/[controller]")]
 [ApiController]
 [Authorize]
-public class AccountjournalController : ControllerBase {
+public class AccountjournalController : ControllerBase
+{
 
     private IMediator _mediator;
 
-    public AccountjournalController(IMediator mediator){
+    public AccountjournalController(IMediator mediator)
+    {
         _mediator = mediator;
     }
 
     [HttpGet("all")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<IEnumerable<AccountJournalDto>>> AllUserOperations(){
+    public async Task<ActionResult<IEnumerable<AccountJournalDto>>> AllUserOperations()
+    {
 
         var command = new QueryUserListOperations();
 
-        try{
-            var commandResult = await _mediator.Send(command);
-            return Ok(commandResult);
-        }catch(Exception ex){
-            return BadRequest(ex.Message);
-        }
+
+        var commandResult = await _mediator.Send(command);
+        return Ok(commandResult);
+
 
     }
 
     [HttpGet("{user_id}")]
     [Authorize(Roles = "User, Admin")]
-    public async Task<ActionResult<IEnumerable<AccountJournalDto>>> UserOperations(int user_id){
-        
+    public async Task<ActionResult<IEnumerable<AccountJournalDto>>> UserOperations(int user_id)
+    {
+
         var command = new QueryUserOperations(user_id);
 
-        try{
-            var commandResult = await _mediator.Send(command);
-            return Ok(commandResult);
-        }catch(Exception ex){
-            return BadRequest(ex.Message);
-        }
+        var commandResult = await _mediator.Send(command);
+        return Ok(commandResult);
+
 
     }
 
-    
+
 }

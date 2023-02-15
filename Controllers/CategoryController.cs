@@ -42,15 +42,10 @@ public class CategoryController : ControllerBase
 
         var query = new QueryListCategory();
 
-        try
-        {
-            var commandResult = await _mediator.Send(query);
-            return Ok(commandResult);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+
+        var commandResult = await _mediator.Send(query);
+        return Ok(commandResult);
+
 
     }
 
@@ -61,15 +56,9 @@ public class CategoryController : ControllerBase
 
         var command = new DeleteCategoryCommand(user_id);
 
-        try
-        {
-            var commandResult = await _mediator.Send(command);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var commandResult = await _mediator.Send(command);
+        return NoContent();
+
 
     }
 
@@ -80,18 +69,14 @@ public class CategoryController : ControllerBase
 
         var command = new AddCategoryCommand(addCategoryDto);
 
-        try
+
+        var commandResult = await _mediator.Send(command);
+        if (!(commandResult.GetType() == typeof(CategoryDto)))
         {
-            var commandResult = await _mediator.Send(command);
-            if(!(commandResult.GetType() == typeof(CategoryDto))){
-                return BadRequest("Something When wrong, please retry");
-            }
-            return Ok("Category successfully added");
+            return BadRequest("Something When wrong, please retry");
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        return Ok("Category successfully added");
+
 
     }
 

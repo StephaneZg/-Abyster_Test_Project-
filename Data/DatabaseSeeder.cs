@@ -38,6 +38,7 @@ public class DatabaseSeeder {
                 }
             };
             _context.Roles.AddRange(roles);
+            _context.SaveChanges();
         }
         
         // var admin = _context.Users.FirstAsync(user => user.emailAddress == "admin@admin.com");
@@ -46,6 +47,8 @@ public class DatabaseSeeder {
                 firstName = "Administrator",
                 lastName = "Administrator",
                 emailAddress = "admin@admin.com",
+                initialized = true,
+                roles = new List<Role>(){ _context.Roles.FirstOrDefault(role => role.libelle == "Admin")},
                 password = BCrypt.Net.BCrypt.HashPassword("Admin*1234")
             };
             _context.Users.Add(adminUser);

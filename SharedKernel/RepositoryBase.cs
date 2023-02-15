@@ -44,7 +44,7 @@ public class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
             .AnyAsync(e => e.Id == id);
     }
 
-    public IQueryable<TEntity> FindAll(bool trackChanges)
+    public virtual IQueryable<TEntity> FindAll(bool trackChanges)
     {
        if (trackChanges)
         {
@@ -56,7 +56,7 @@ public class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
         }
     }
 
-    public IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression, bool trackChanges)
+    public virtual IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression, bool trackChanges)
     {
         if (trackChanges)
         {

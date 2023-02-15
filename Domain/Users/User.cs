@@ -34,5 +34,8 @@ public class User : Common{
 
     public IEnumerable<Role> roles { get; set;}
 
+    [Column(TypeName = "Boolean")]
+    public bool initialized {get; set;}
+
     
 }

@@ -48,6 +48,10 @@ public class DatabaseContext : DbContext
                 .Property(user => user.isActive)
                 .HasDefaultValue(true);
 
+        modelBuilder.Entity<User>()
+                .Property(user => user.initialized)
+                .HasDefaultValue(false);
+
             //Account
         modelBuilder.Entity<Account>()
                 .Property(account => account.Id)

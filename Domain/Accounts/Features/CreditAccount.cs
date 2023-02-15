@@ -69,7 +69,7 @@ public class CreditAccount
 
         private Category getCreditCategory(int category_id)
         {
-            var mathcCategory = _serviceManager.Category.FindByCondition(category => category.Id == category_id, false).SingleOrDefault();
+            var mathcCategory = _serviceManager.Category.FindByCondition(category => category.Id == category_id, true).SingleOrDefault();
             if (mathcCategory == null)
             {
                 throw new Exception("Category does not exists.");

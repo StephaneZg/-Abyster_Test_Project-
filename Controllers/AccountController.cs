@@ -17,45 +17,42 @@ namespace Abyster_Test_Project.Controllers;
 [Route("api/v1/[controller]")]
 [ApiController]
 [Authorize]
-public class AccountController : ControllerBase {
+public class AccountController : ControllerBase
+{
 
     private IMediator _mediator;
 
-    public AccountController(IMediator mediator){
+    public AccountController(IMediator mediator)
+    {
         _mediator = mediator;
     }
 
     [HttpPost("credite")]
-    [Authorize(Roles = "User")]
-    public async Task<ActionResult<AccountDto>> CreditAccount(CreditAccountRequest creditAccountRequest){
+    [Authorize(Roles = "Admin, User")]
+    public async Task<ActionResult<AccountDto>> CreditAccount(CreditAccountRequest creditAccountRequest)
+    {
 
         var command = new CreditAccountCommand(creditAccountRequest);
 
-        try{
-            var commandResult = await _mediator.Send(command);
-            if(commandResult == true) return Ok("operation completed successfully");
-            else return BadRequest();
-        }catch(Exception ex){
-            return BadRequest(ex.Message);
-        }
+
+        var commandResult = await _mediator.Send(command);
+        if (commandResult == true) return Ok("operation completed successfully");
+        else return BadRequest();
+
 
     }
 
     [HttpPost("debite")]
-    [Authorize(Roles = "User")]
-    public async Task<ActionResult> DebiteAccount(DebiteAccountRequest debiteAccountRequest){
-        
+    [Authorize(Roles = "Admin, User")]
+    public async Task<ActionResult> DebiteAccount(DebiteAccountRequest debiteAccountRequest)
+    {
+
         var command = new DebiteAccountCommand(debiteAccountRequest);
 
-        try{
-            var commandResult = await _mediator.Send(command);
-            if(commandResult == true) return Ok("operation completed successfully");
-            else return BadRequest();
-        }catch(Exception ex){
-            return BadRequest(ex.Message);
-        }
-
+        var commandResult = await _mediator.Send(command);
+        if (commandResult == true) return Ok("operation completed successfully");
+        else return BadRequest();
     }
 
-    
+
 }

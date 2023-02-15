@@ -11,8 +11,6 @@ public class UserDto : Common{
 
     public string emailAddress { get; set; }
 
-    public string password { get; set; }
-
     public bool isActive {get; set;}
 
 }

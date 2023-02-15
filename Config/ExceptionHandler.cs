@@ -5,11 +5,11 @@ using MediatR.Pipeline;
 
 namespace Abyster_Test_Project.Config;
 
-public abstract class ExceptionHandler<TRequest, TResponse> : RequestExceptionHandler<TRequest, TResponse, Exception>
+public class ExceptionHandler<TRequest, TResponse> : IRequestExceptionHandler<TRequest, TResponse, Exception>
     where TRequest : IRequest<TResponse>
     where TResponse : ErrorDetail, new()
 {
-    protected override void Handle(TRequest request, Exception exception, RequestExceptionHandlerState<TResponse> state)
+    public async Task Handle(TRequest request, Exception exception, RequestExceptionHandlerState<TResponse> state, CancellationToken cancellationToken)
     {
         var response = new TResponse(){
             message = exception.Message,

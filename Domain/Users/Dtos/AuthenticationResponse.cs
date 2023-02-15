@@ -1,7 +1,9 @@
 
+using Abyster_Test_Project.SharedKernel;
+
 namespace Abyster_Test_Project.Domain.Users.Dtos;
 
-public class AuthenticationResponse {
+public class AuthenticationResponse : ErrorDetail {
 
     public string firstName { get; set; }
 
