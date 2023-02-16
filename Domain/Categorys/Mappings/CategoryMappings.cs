@@ -12,10 +12,8 @@ public class CategoryMappings : Profile {
 
 
     public CategoryMappings(){
-        CreateMap<Category, CategoryDto>()
-                .ReverseMap();
-
-
+        CreateMap<Category, CategoryDto>().ReverseMap();
+        CreateMap<Category, AddCategoryDto>().ReverseMap();
 
     }
 

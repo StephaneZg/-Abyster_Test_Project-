@@ -3,7 +3,7 @@ using Abyster_Test_Project.SharedKernel;
 
 namespace Abyster_Test_Project.Domain.Categorys.Dto;
 
-public class AddCategoryDto : Common{
+public class AddCategoryDto {
     
     [Required]
     public string libelle {get; set;}
